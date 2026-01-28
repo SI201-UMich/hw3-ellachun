@@ -46,7 +46,7 @@ class CouponDispenser:
             str
         """
         # TODO: Implement per instructions
-        pass
+        return "|".join(self.coupon_cards)
 
     def issue_coupon(self, name):
         """
