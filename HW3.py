@@ -77,10 +77,6 @@ class CouponDispenser:
         self.issued_indices.append(chosen_index)
         return self.coupon_cards[chosen_index]
     
-    chosen_index = random.randrange(0, len(self.coupon_cards))
-    self.customer_roster.append(name)
-    self.issued_indices.append(chosen_index)
-    return self.coupon_cards[chosen_index]
 
     def distribute_session(self):
         """
@@ -99,26 +95,30 @@ class CouponDispenser:
         """
         # TODO: Implement per instructions 
         round_number = 1
+
         while True:
             user_input = input(f"Round {round_number} - Enter a name (or a comma-separated list), or type 'show' or 'exit': ")
+
             if user_input == "exit":
                 print("Goodbye!")
                 break
-            if user_input == "show":
+
+            elif user_input == "show":
                 for i in range(len(self.customer_roster)):
                     name = self.customer_roster[i]
-                    coupon_text = self.coupon_cards[self.issued_indices[i]]
-                    print(f"{name}: {coupon_text}")
-                round_number += 1
-                continue 
+                    coupon = self.coupon_cards[self.issued_indices[i]]
+                    print(f"{name}: {coupon}")
 
-        pieces = user_input.split(",")
-        for piece in pieces:
-            name = piece.strip()
-            if name == "":
-                continue
-            msg = self.issue_coupon(name)
-            print(msg)
+            else: 
+                pieces = user_input.split(",")
+                for piece in pieces:
+                    name = piece.strip()
+                    if name == "":
+                        continue
+                    msg = self.issue_coupon(name)
+                    print(msg)
+
+            round_number += 1
 
     def tally_distribution(self):
         """
@@ -145,8 +145,7 @@ class CouponDispenser:
             for issued in self.issued_indices:
                 if issued == coupon_index:
                     count += 1
-            coupon_text = self.coupon_cards[coupon_index]
-            print(f"{coupon_text} distribution count: {count}.")
+            print(f"{self.coupon_cards[coupon_index]} distribution count: {count}.")
 
 
 def main():
@@ -165,10 +164,10 @@ def main():
     ]
 
     # Uncomment the lines below as you implement each function.
-    # box = CouponDispenser(coupon_cards)
-    # box.distribute_session()
-    # box.tally_distribution()
-    pass
+    box = CouponDispenser(coupon_cards)
+    box.distribute_session()
+    box.tally_distribution()
+    
 
 
 # -----------------------
